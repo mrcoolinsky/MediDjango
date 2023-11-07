@@ -1,14 +1,66 @@
-<html>
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Rejestracja</title>
 
-    <h1>To jest strona logowania</h1>
 
-    <form method="POST" autocomplete="off">
+    <!-- Bootstrap core CSS -->
+<link href="{% static 'assets/dist/css/bootstrap.min.css' %}" rel="stylesheet">
 
-        {% csrf_token %}
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
 
-        {{ loginform.as_p }}
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
 
-        <input type="submit" value="login">
+    
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+  </head>
+  <body class="text-center">
 
-    </form>
+<main class="form-signin">
+
+  <form method="POST" name="LoginForm">
+      {% csrf_token %}
+    <img class="mb-4 " src="{% static 'assets/brand/logo.png' %}" alt="" width="414" height="261" >
+    <h1 class="h3 mb-3 fw-normal">Logowanie</h1>
+    <div class="form-floating">
+        {{ loginform.username }}
+      <label >Login</label>
+    </div>
+    <div class="form-floating">
+        {{ loginform.password }}
+      <label>Hasło</label>
+    </div>
+
+    <div class="mb-3">
+        {{ loginform.confirm_login_allowed }}
+    </div>
+    <button class="w-100 btn btn-lg btn-primary btn-color" type="submit" value="login">Zaloguj się</button>
+
+    <p class="mt-2 ">Nie masz jeszcze konta? <a href='register'>Zarejestruj się!</a></p>
+
+    <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
+  </form>
+</main>
+
+
+    
+  </body>
 </html>
