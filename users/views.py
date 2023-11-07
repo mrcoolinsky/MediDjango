@@ -21,7 +21,7 @@ def login(request):
 
             if user is not None:
                 auth.login(request, user)
-                return redirect("register")
+                return redirect("dashboard")
     context = {'loginform': form}
     return render(request, 'users/login.html', context=context)
 
@@ -43,4 +43,4 @@ def register(request):
 def user_logout(request):
     auth.logout(request)
 
-    return redirect("")
+    return redirect("main")
