@@ -4,6 +4,8 @@ from .forms import CreateUserForm, LoginForm
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 
+from django.contrib.auth.decorators import login_required
+
 
 def login(request):
     form = LoginForm()
@@ -36,3 +38,9 @@ def register(request):
 
     context = {'reformist': form}
     return render(request, 'users/register.html', context=context)
+
+
+def user_logout(request):
+    auth.logout(request)
+
+    return redirect("")
