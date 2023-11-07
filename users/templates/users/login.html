@@ -1,5 +1,14 @@
 <html>
 
-<h3>To jest strona logowania</h3>
+    <h1>To jest strona logowania</h1>
 
+    <form method="POST" autocomplete="off">
+
+        {% csrf_token %}
+
+        {{ loginform.as_p }}
+
+        <input type="submit" value="login">
+
+    </form>
 </html>
