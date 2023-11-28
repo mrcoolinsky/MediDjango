@@ -4,6 +4,8 @@ from .forms import CreateUserForm, LoginForm
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 
+from .models import Patient
+
 from django.contrib.auth.decorators import login_required
 
 
@@ -36,7 +38,7 @@ def register(request):
             form.save()
         return redirect("login")
 
-    context = {'reformist': form}
+    context = {'register': form}
     return render(request, 'users/register.html', context=context)
 
 
@@ -44,3 +46,13 @@ def user_logout(request):
     auth.logout(request)
 
     return redirect("main")
+
+
+def widok(request):
+    obj = Patient.objects.get(id=2)
+
+    context = {'imie': obj.Name,
+               'nazwisko': obj.Surname
+
+    }
+    return render(request, 'users/test.html', context=context)
