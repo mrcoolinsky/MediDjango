@@ -10,10 +10,19 @@ class CreateUserForm(UserCreationForm):
     email = forms.EmailField()
     first_name = forms.CharField(max_length=20)
     last_name = forms.CharField(max_length=20)
-
+    date_of_birth = forms.DateField()
+    """
+    Street = forms.CharField()
+    Number = forms.CharField()
+    Zip_code = forms.CharField()
+    City = forms.CharField()
+    'Street', 'Number', 'Zip_code', 'City',
+"""
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
+        fields = (
+            "username", 'email', 'first_name', 'last_name', 'date_of_birth',
+            'password1', 'password2')
 
 
 # login user

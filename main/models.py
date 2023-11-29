@@ -1,3 +1,71 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
+
+class Address(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    Street = models.TextField()
+    Number = models.TextField()
+    Zip_code = models.TextField()
+    City = models.TextField()
+
+    def __str__(self):
+        return str(self.Street + " " + self.Number + ", " + self.City)
+
+
+class Doctor(models.Model):
+    user = models.OneToOneField(User, null=False, on_delete=models.CASCADE)
+    address = models.OneToOneField(Address, null=False, on_delete=models.CASCADE, default="")
+    Name = models.CharField(max_length=20, null=False, default="")
+    Surname = models.CharField(max_length=20, null=False, default="")
+    Specialization = models.CharField(max_length=50, null=False, default="")
+
+    def __str__(self):
+        return str(self.user)
+
+
+class Medicine(models.Model):
+    title = models.CharField(null=False, default="", max_length=20)
+    property = models.CharField(null=True, default="", max_length=50)
+    availability = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.title)
+
+
+class Disease(models.Model):
+    title = models.CharField(null=False, default="", max_length=20)
+    property = models.CharField(null=False, default="", max_length=50)
+
+    def __str__(self):
+        return str(self.title)
+
+
+class Documentation(models.Model):
+    title = models.CharField(max_length=20, null=False, default="")
+    patients = models.OneToOneField("Patient", on_delete=models.CASCADE, default="")
+    medicines = models.ForeignKey(Medicine, null=True, blank=True, on_delete=models.CASCADE)
+    diseases = models.ForeignKey(Disease, null=True, blank=True, on_delete=models.CASCADE)
+    visits = models.ForeignKey("Visit", null=True, blank=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.title)
+
+
+class Patient(models.Model):
+    user = models.OneToOneField(User, null=False, on_delete=models.CASCADE)
+    address = models.OneToOneField(Address, null=True, on_delete=models.CASCADE)
+    DateOfBirth = models.DateField(max_length=10, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.user)
+
+
+class Visit(models.Model):
+    title = models.CharField(null=False, default="", max_length=20)
+    patient = models.ForeignKey(Patient, null=False, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, null=False, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+
+    def __str__(self):
+        return str(self.title)

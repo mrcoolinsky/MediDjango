@@ -45,7 +45,9 @@
       <label for="floatingInput">Email address</label>
     </div>
     <div class="form-floating">
-
+        {% if register.errors %}
+            <p style="color: red;">Form has errors. Please correct them.</p>
+        {% endif %}
       <label for="floatingPassword">Password</label>
     </div>
     <div class="form-floating">

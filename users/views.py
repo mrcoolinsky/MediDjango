@@ -4,7 +4,7 @@ from .forms import CreateUserForm, LoginForm
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 
-from .models import Patient
+from main.models import Patient
 
 from django.contrib.auth.decorators import login_required
 
@@ -36,6 +36,12 @@ def register(request):
 
         if form.is_valid():
             form.save()
+            '''
+            patient = Patient.objects.create(
+                user=user,
+                DateOfBirth=form.cleaned_data['date_of_birth']
+            )
+            '''
         return redirect("login")
 
     context = {'register': form}
