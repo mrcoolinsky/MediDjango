@@ -54,7 +54,7 @@ class Documentation(models.Model):
 
 class Patient(models.Model):
     user = models.OneToOneField(User, null=False, on_delete=models.CASCADE)
-    address = models.OneToOneField(Address, null=True, on_delete=models.CASCADE)
+    #address = models.OneToOneField(Address, null=True, on_delete=models.CASCADE)
     DateOfBirth = models.DateField(max_length=10, null=True, blank=True)
 
     def __str__(self):

@@ -36,13 +36,12 @@ def register(request):
 
         if form.is_valid():
             form.save()
-            '''
-            patient = Patient.objects.create(
-                user=user,
-                DateOfBirth=form.cleaned_data['date_of_birth']
-            )
-            '''
-        return redirect("login")
+
+            return redirect("login")
+
+        else:
+            print("Formularz niepoprawny")
+            print(form.errors)
 
     context = {'register': form}
     return render(request, 'users/register.html', context=context)
@@ -60,5 +59,5 @@ def widok(request):
     context = {'imie': obj.Name,
                'nazwisko': obj.Surname
 
-    }
+               }
     return render(request, 'users/test.html', context=context)
