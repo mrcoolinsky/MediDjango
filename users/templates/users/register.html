@@ -46,13 +46,9 @@
 
 
         {% if register.errors %}
-         <div class="form-control">
-        <ul class="register.errors">
-          {% for error in register.errors %}
-            <li>{{ error }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
+            <div class="form-control">
+            {{ register.errors }}
+        {% endif %}
     </div>
     </div>
     <button class="w-100 btn btn-lg btn-primary btn-color" type="submit">Zarejestruj się</button>
