@@ -54,11 +54,13 @@ class Documentation(models.Model):
 
 class Patient(models.Model):
     user = models.OneToOneField(User, null=False, on_delete=models.CASCADE)
-    #address = models.OneToOneField(Address, null=True, on_delete=models.CASCADE)
-    DateOfBirth = models.DateField(max_length=10, null=True, blank=True)
+    name = models.CharField(max_length=20, default="")
+    surname = models.CharField(max_length=30, default="")
+    address = models.OneToOneField(Address, null=True, on_delete=models.CASCADE)
+    DateOfBirth = models.DateField(default='2000-01-01')
 
     def __str__(self):
-        return str(self.user)
+        return f"{self.name} {self.surname}"
 
 
 class Visit(models.Model):
