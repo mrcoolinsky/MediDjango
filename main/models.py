@@ -3,22 +3,21 @@ from django.contrib.auth.models import User
 
 
 class Address(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    Street = models.TextField()
-    Number = models.TextField()
-    Zip_code = models.TextField()
-    City = models.TextField()
+    street = models.TextField()
+    number = models.TextField()
+    zip_code = models.TextField()
+    city = models.TextField()
 
     def __str__(self):
-        return str(self.Street + " " + self.Number + ", " + self.City)
+        return str(self.street + " " + self.number + ", " + self.city)
 
 
 class Doctor(models.Model):
     user = models.OneToOneField(User, null=False, on_delete=models.CASCADE)
     address = models.OneToOneField(Address, null=False, on_delete=models.CASCADE, default="")
-    Name = models.CharField(max_length=20, null=False, default="")
-    Surname = models.CharField(max_length=20, null=False, default="")
-    Specialization = models.CharField(max_length=50, null=False, default="")
+    name = models.CharField(max_length=20, null=False, default="")
+    surname = models.CharField(max_length=20, null=False, default="")
+    specialization = models.CharField(max_length=50, null=False, default="")
 
     def __str__(self):
         return str(self.user)
@@ -57,7 +56,7 @@ class Patient(models.Model):
     name = models.CharField(max_length=20, default="")
     surname = models.CharField(max_length=30, default="")
     address = models.OneToOneField(Address, null=True, on_delete=models.CASCADE)
-    DateOfBirth = models.DateField(default='2000-01-01')
+    date_of_birth = models.DateField(default='2000-01-01')
 
     def __str__(self):
         return f"{self.name} {self.surname}"

@@ -30,10 +30,10 @@ class LoginForm(AuthenticationForm):
 
 
 class AdditionalDataForm(forms.Form):
-    name = forms.CharField(max_length=20)
-    surname = forms.CharField(max_length=20)
-    date_of_birth = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}))
-    Street = forms.CharField(max_length=20)
-    Number = forms.CharField(max_length=5)
-    Zip_code = forms.CharField(max_length=6)
-    City = forms.CharField(max_length=20)
+    name = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    surname = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    date_of_birth = forms.DateField(widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control'}))
+    street = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    number = forms.CharField(max_length=5, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    zip_code = forms.CharField(max_length=6, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    city = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))

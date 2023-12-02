@@ -3,6 +3,7 @@ from .forms import CreateUserForm, LoginForm, AdditionalDataForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
+from main.models import Patient, Address
 
 
 def login(request):
@@ -35,7 +36,6 @@ def register(request):
 
         if form.is_valid():
             user = form.save()
-
             auth.login(request, user)
             return redirect("patient_data")
         else:
@@ -54,4 +54,39 @@ def user_logout(request):
 
 @login_required(login_url="login")
 def patient_data(request):
-    return render(request, 'users/patient_data.html')
+    form = AdditionalDataForm()
+
+    if request.method == "POST":
+        form = AdditionalDataForm(request.POST)
+
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            surname = form.cleaned_data['surname']
+            date_of_birth = form.cleaned_data['date_of_birth']
+            street = form.cleaned_data['street']
+            number = form.cleaned_data['number']
+            zip_code = form.cleaned_data['zip_code']
+            city = form.cleaned_data['city']
+
+            address = Address.objects.create(
+                street=street,
+                zip_code=zip_code,
+                number=number,
+                city=city,
+            )
+
+            patient = Patient.objects.create(
+                user=request.user,
+                name=name,
+                surname=surname,
+                date_of_birth=date_of_birth,
+                address=address,
+            )
+            return redirect('dashboard')
+        else:
+            print("Formularz niepoprawny")
+            print(form.errors)
+
+    context = {'patient_data': form}
+
+    return render(request, 'users/patient_data.html', context=context)
