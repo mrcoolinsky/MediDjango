@@ -54,6 +54,11 @@ def user_logout(request):
 
 @login_required(login_url="login")
 def patient_data(request):
+
+    try:
+        patient = Patient.objects.get(user=request.user)
+    except Patient.DoesNotExist:
+        patient = None
     form = AdditionalDataForm()
 
     if request.method == "POST":
@@ -68,19 +73,30 @@ def patient_data(request):
             zip_code = form.cleaned_data['zip_code']
             city = form.cleaned_data['city']
 
-            address = Address.objects.create(
-                street=street,
-                zip_code=zip_code,
-                number=number,
-                city=city,
-            )
-
-            patient = Patient.objects.create(
-                user=request.user,
-                name=name,
-                surname=surname,
-                date_of_birth=date_of_birth,
-                address=address,
+            if patient:
+                patient.user = request.user
+                patient.name = name
+                patient.surname = surname
+                patient.date_of_birth = date_of_birth
+                patient.address.street = street
+                patient.address.number = number
+                patient.address.zip_code = zip_code
+                patient.address.city = city
+                patient.save()
+                patient.address.save()
+            else:
+                address = Address.objects.create(
+                    street=street,
+                    zip_code=zip_code,
+                    number=number,
+                    city=city,
+                )
+                patient = Patient.objects.create(
+                    user=request.user,
+                    name=name,
+                    surname=surname,
+                    date_of_birth=date_of_birth,
+                    address=address,
             )
             return redirect('dashboard')
         else:
