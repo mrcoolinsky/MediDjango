@@ -8,4 +8,7 @@ def dashboard(request):
 
 
 def main(request):
-    return render(request, 'main/main.html')
+    if request.user.is_authenticated:
+        return redirect("dashboard")
+    else:
+        return redirect("login")

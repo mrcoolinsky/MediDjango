@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Rejestracja</title>
+    <title>Uzupełnij dane </title>
 
 
     <!-- Bootstrap core CSS -->
@@ -35,19 +35,12 @@
   <body class="text-center">
 
 <main class="form-signin">
-  <form method="POST" name="CreateUserForm">
+  <form method="POST" name="AdditionalDataForm">
     {% csrf_token %}
     <img class="mb-4 " src="{% static 'assets/brand/logo.png' %}" alt="" width="414" height="261" >
-    <h1 class="h3 mb-3 fw-normal">Rejestracja</h1>
+    <h1 class="h3 mb-3 fw-normal">Uzupełnij dodatkowe dane</h1>
     <div class="form-control">
-        {{ register.as_p }}
-    </div>
-    <div>
-        {% if register.errors %}
-            <div class="form-control">
-            {{ register.errors }}
-            </div>
-        {% endif %}
+        {{ patient_data.as_p }}
     </div>
     <button class="w-100 btn btn-lg btn-primary btn-color" type="submit">Zarejestruj się</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2023</p>

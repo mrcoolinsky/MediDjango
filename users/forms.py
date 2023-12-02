@@ -9,7 +9,12 @@ from django.forms.widgets import PasswordInput, TextInput
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ("username", 'email', 'password1', 'password2')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
 
 
 # login user
@@ -24,3 +29,11 @@ class LoginForm(AuthenticationForm):
             field.widget.attrs['class'] = 'form-control'
 
 
+class AdditionalDataForm(forms.Form):
+    name = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    surname = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    date_of_birth = forms.DateField(widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control'}))
+    street = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    number = forms.CharField(max_length=5, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    zip_code = forms.CharField(max_length=6, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    city = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
