@@ -1,7 +1,56 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Uzupełnij dane </title>
 
-{% block content %}
 
-    <h1>Pacjent</h1>
+    <!-- Bootstrap core CSS -->
+<link href="{% static 'assets/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
 
 
-{% endblock %}
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+  </head>
+  <body class="text-center">
+
+<main class="form-signin">
+  <form method="POST" name="CreateUserForm">
+    {% csrf_token %}
+    <img class="mb-4 " src="{% static 'assets/brand/logo.png' %}" alt="" width="414" height="261" >
+    <h1 class="h3 mb-3 fw-normal">Uzupełnij dodatkowe dane</h1>
+    <div class="form-control">
+        {{ register.as_p }}
+    </div>
+        {% if register.errors %}
+            <div class="form-control">
+            {{ register.errors }}
+            </div>
+        {% endif %}
+    </div>
+    <button class="w-100 btn btn-lg btn-primary btn-color" type="submit">Zarejestruj się</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
+  </form>
+</main>
+  </body>
+</html>
