@@ -1,12 +1,8 @@
 from django.shortcuts import render, redirect
-from .forms import CreateUserForm, LoginForm
-
+from .forms import CreateUserForm, LoginForm, AdditionalDataForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
-
-from main.models import Patient
-
-from django.contrib.auth.decorators import login_required
 
 
 def login(request):
@@ -35,10 +31,10 @@ def register(request):
         form = CreateUserForm(request.POST)
 
         if form.is_valid():
-            form.save()
+            user = form.save()
 
-            return redirect("login")
-
+            auth.login(request, user)
+            return redirect("patient_data")
         else:
             print("Formularz niepoprawny")
             print(form.errors)
@@ -50,14 +46,9 @@ def register(request):
 def user_logout(request):
     auth.logout(request)
 
-    return redirect("main")
+    return redirect("login")
 
 
-def widok(request):
-    obj = Patient.objects.get(id=2)
-
-    context = {'imie': obj.Name,
-               'nazwisko': obj.Surname
-
-               }
-    return render(request, 'users/test.html', context=context)
+@login_required(login_url="login")
+def patient_data(request):
+    return render(request, 'users/patient_data.html')
