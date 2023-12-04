@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'main',
     'users',
     'bootstrap5',
+    'visit_management',
 ]
 
 MIDDLEWARE = [
