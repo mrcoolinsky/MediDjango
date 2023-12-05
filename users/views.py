@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import CreateUserForm, LoginForm, AdditionalDataForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import auth
+from django.contrib.auth.models import auth, Group
 from django.contrib.auth import authenticate, login, logout
 from main.models import Patient, Address
 
@@ -36,6 +36,8 @@ def register(request):
 
         if form.is_valid():
             user = form.save()
+            group = Group.objects.get(name='Pacjent')
+            user.groups.add(group)
             auth.login(request, user)
             return redirect("patient_data")
         else:
