@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 
 class Address(models.Model):
@@ -70,3 +70,8 @@ class Visit(models.Model):
 
     def __str__(self):
         return str(self.title)
+
+
+doctor_group, created = Group.objects.get_or_create(name='Lekarz')
+receptionist_group, created = Group.objects.get_or_create(name='Recepcjonista')
+patient_group, created = Group.objects.get_or_create(name='Pacjent')
