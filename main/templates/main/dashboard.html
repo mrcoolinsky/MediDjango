@@ -44,22 +44,19 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <!--<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
+  <nav class="navbar-expand-lg">
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+              {% if user.is_authenticated %}
+              <li class="nav-item"><span class="nav-link">Witaj {{ user.patient.name }} {{ user.patient.surname }}!</span></li>
+              {% else %}
+                  Użytkownik niezalogowany.
+              {% endif %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'user_logout' %}">Wyloguj</a></li>
+          </ul>
+      </div>
+  </nav>
 
-    <span class="navbar-text">
-
-        {% if user.is_authenticated %}
-            Witaj {{ user.patient.name }} {{ user.patient.surname }}!
-        {% else %}
-            Użytkownik niezalogowany.
-        {% endif %}
-
-    </span>
-
-  <div class="navbar-nav">
-    <div class="nav-item text-nowrap">
-      <a class="nav-link px-3" href="{% url 'user_logout' %}">Wyloguj</a>
-    </div>
-  </div>
 </header>
 
 <div class="container-fluid">
