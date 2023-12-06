@@ -2,11 +2,32 @@
 {% block title %}Pacjenci{% endblock %}
 {% block content_title %}Pacjenci{% endblock %}
 {% block content_main %}
-    <ul>
-        {% for patient in patients %}
-            <li>{{ patient.name }}: {{ patient.surname }}</li>
-            <li>{{ patient.address.street }}: {{ patient.address.city }}</li>
-        {% endfor %}
-    </ul>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Imię</th>
+                  <th scope="col">Nazwisko</th>
+                  <th scope="col">Adres</th>
+                  <th scope="col">Data Urodzenia</th>
+                  <th scope="col">Telefon</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for patient in all_patients %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ patient.name }}</td>
+                    <td>{{ patient.surname }}</td>
+                    <td>{{ patient.address.street }} {{ patient.address.number }}, {{ patient.address.zip_code }} {{ patient.address.city }}</td>
+                    <td>{{ patient.date_of_birth }}</td>
+                    <td>{{ patient.phone_number }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+      </div>
 
 {% endblock %}
+

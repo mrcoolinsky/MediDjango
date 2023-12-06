@@ -57,6 +57,7 @@ class Patient(models.Model):
     surname = models.CharField(max_length=30, default="")
     address = models.OneToOneField(Address, null=True, on_delete=models.CASCADE)
     date_of_birth = models.DateField(default='2000-01-01')
+    phone_number = models.CharField(default="", null=False, max_length=9)
 
     def __str__(self):
         return f"{self.name} {self.surname}"

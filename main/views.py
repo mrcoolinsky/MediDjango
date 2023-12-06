@@ -21,7 +21,7 @@ def main(request):
 
 @login_required(login_url="login")
 def patients(request):
-    Patients = Patient.objects.all()
+    all_patients = Patient.objects.all()
 
-    context = {'patients': Patients, 'active_app': 'patients'}
+    context = {'all_patients': all_patients, 'active_app': 'patients'}
     return render(request, 'main/patients.html', context=context)
