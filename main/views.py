@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Permission
 from main.models import Patient, Address
+from users.forms import AdditionalDataForm
 
 
 @login_required(login_url="login")
@@ -25,3 +26,9 @@ def patients(request):
 
     context = {'all_patients': all_patients, 'active_app': 'patients'}
     return render(request, 'main/patients.html', context=context)
+
+
+@login_required(login_url="login")
+def edit_patient(request, patient_id):
+    patient = Patient.objects.get(pk=patient_id)
+    return render(request, 'main/edit_patient.html', {'patient_id': patient_id, 'patient': patient})
