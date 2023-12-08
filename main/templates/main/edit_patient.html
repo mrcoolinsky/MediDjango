@@ -24,5 +24,13 @@
             </tbody>
         </table>
       </div>
-
+      <form method="POST" name=" PatientDataForm">
+        {% csrf_token %}
+        <div class="form-control">
+                  {{ patient_form.as_p }}
+                  {{ address_form.as_p }}
+        </div>
+        <button class="w-100 btn btn-lg btn-color" type="submit">Zmień dane</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
+      </form>
 {% endblock %}

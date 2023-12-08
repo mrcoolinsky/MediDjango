@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import CreateUserForm, LoginForm, AdditionalDataForm
+from .forms import CreateUserForm, LoginForm, PatientDataForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import auth, Group
 from django.contrib.auth import authenticate, login, logout
@@ -61,12 +61,13 @@ def patient_data(request):
         patient = Patient.objects.get(user=request.user)
     except Patient.DoesNotExist:
         patient = None
-    form = AdditionalDataForm()
+    form = PatientDataForm()
 
     if request.method == "POST":
-        form = AdditionalDataForm(request.POST)
+        form = PatientDataForm(request.POST, instance = patient)
 
         if form.is_valid():
+            '''
             name = form.cleaned_data['name']
             surname = form.cleaned_data['surname']
             date_of_birth = form.cleaned_data['date_of_birth']
@@ -74,7 +75,7 @@ def patient_data(request):
             number = form.cleaned_data['number']
             zip_code = form.cleaned_data['zip_code']
             city = form.cleaned_data['city']
-
+            
             if patient:
                 patient.user = request.user
                 patient.name = name
@@ -100,6 +101,8 @@ def patient_data(request):
                     date_of_birth=date_of_birth,
                     address=address,
             )
+            '''
+            form.save()
             return redirect('dashboard')
         else:
             print("Formularz niepoprawny")
