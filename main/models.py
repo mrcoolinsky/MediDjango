@@ -3,10 +3,10 @@ from django.contrib.auth.models import User, Group
 
 
 class Address(models.Model):
-    street = models.TextField()
-    number = models.TextField()
-    zip_code = models.TextField()
-    city = models.TextField()
+    street = models.CharField(max_length=20)
+    number = models.CharField(max_length=4)
+    zip_code = models.CharField(max_length=6)
+    city = models.CharField(max_length=20)
 
     def __str__(self):
         return str(self.street + " " + self.number + ", " + self.city)
@@ -17,6 +17,7 @@ class Doctor(models.Model):
     address = models.OneToOneField(Address, null=False, on_delete=models.CASCADE, default="")
     name = models.CharField(max_length=20, null=False, default="")
     surname = models.CharField(max_length=20, null=False, default="")
+    phone_number = models.CharField(default="", null=False, max_length=9)
     specialization = models.CharField(max_length=50, null=False, default="")
 
     def __str__(self):
@@ -57,6 +58,7 @@ class Patient(models.Model):
     surname = models.CharField(max_length=30, default="")
     address = models.OneToOneField(Address, null=True, on_delete=models.CASCADE)
     date_of_birth = models.DateField(default='2000-01-01')
+    phone_number = models.CharField(default="", null=False, max_length=9)
 
     def __str__(self):
         return f"{self.name} {self.surname}"

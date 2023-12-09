@@ -1,0 +1,35 @@
+{% extends "main/doctors.html" %}
+{% block content_main %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th scope="col">Imię</th>
+                  <th scope="col">Nazwisko</th>
+                  <th scope="col">Adres</th>
+                  <th scope="col">Telefon</th>
+                  <th scope="col">Specjalizacja</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ doctor.name }}</td>
+                    <td>{{ doctor.surname }}</td>
+                    <td>{{ doctor.address.street }} {{ doctor.address.number }}, {{ doctor.address.zip_code }} {{ doctor.address.city }}</td>
+                    <td>{{ doctor.phone_number }}</td>
+                    <td>{{ doctor.specialization }}</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+      <form method="POST" name=" PatientDataForm">
+        {% csrf_token %}
+        <div class="form-control">
+                  {{ doctor_form.as_p }}
+                  {{ address_form.as_p }}
+            <div class="d-flex justify-content-center">
+                <button class="w-25 btn btn-lg btn-primary" type="submit">Zmień dane</button>
+            </div>
+        </div>
+      </form>
+{% endblock %}
