@@ -12,6 +12,7 @@
                   <th scope="col">Adres</th>
                   <th scope="col">Telefon</th>
                   <th scope="col">Specjalizacja</th>
+                  <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -23,6 +24,7 @@
                     <td>{{ doctor.address.street }} {{ doctor.address.number }}, {{ doctor.address.zip_code }} {{ doctor.address.city }}</td>
                     <td>{{ doctor.phone_number }}</td>
                     <td>{{ doctor.specialization }}</td>
+                    <td><a href="{% url 'edit_doctor' doctor.id %}">Edytuj</a></td>
                 </tr>
               {% endfor %}
             </tbody>

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Permission
 from main.models import Patient, Address, Doctor
-from users.forms import PatientDataForm, AddressDataForm
+from users.forms import PatientDataForm, AddressDataForm, DoctorDataForm
 
 
 @login_required(login_url="login")
@@ -56,3 +56,27 @@ def doctors(request):
 
     context = {'all_doctors': all_doctors, 'active_app': 'doctors'}
     return render(request, 'main/doctors.html', context=context)
+
+
+@login_required(login_url="login")
+def edit_doctor(request, doctor_id):
+
+    doctor = Doctor.objects.get(id=doctor_id)
+    address_id = doctor.address.id
+    address = Address.objects.get(id=address_id)
+
+    doctor_form = DoctorDataForm(instance=doctor)
+    address_form = AddressDataForm(instance=address)
+
+    if request.method == "POST":
+
+        doctor_form = DoctorDataForm(request.POST, instance=doctor)
+        address_form = AddressDataForm(request.POST, instance=address)
+
+        if doctor_form.is_valid() and address_form.is_valid():
+            address_form.save()
+            doctor_form.save()
+            return redirect('doctors')
+
+    context = {'doctor_id': doctor_id, 'doctor': doctor, 'doctor_form': doctor_form, 'address_form': address_form}
+    return render(request, 'main/edit_doctor.html', context=context)
