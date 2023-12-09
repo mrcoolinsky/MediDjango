@@ -1,8 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Permission, User, Group
 from main.models import Patient, Address, Doctor
 from users.forms import PatientDataForm, AddressDataForm, DoctorDataForm
+from django.contrib.auth.decorators import user_passes_test
+
+
+def is_receptionist(user):
+    return user.groups.filter(name='Recepcjonista').exists()
 
 
 @login_required(login_url="login")
@@ -21,6 +26,7 @@ def main(request):
 
 
 @login_required(login_url="login")
+@user_passes_test(is_receptionist)
 def patients(request):
     all_patients = Patient.objects.all()
 
@@ -60,7 +66,6 @@ def doctors(request):
 
 @login_required(login_url="login")
 def edit_doctor(request, doctor_id):
-
     doctor = Doctor.objects.get(id=doctor_id)
     address_id = doctor.address.id
     address = Address.objects.get(id=address_id)
