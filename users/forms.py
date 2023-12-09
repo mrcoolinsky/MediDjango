@@ -31,6 +31,8 @@ class LoginForm(AuthenticationForm):
 
 
 class PatientDataForm(forms.ModelForm):
+    date_of_birth = forms.DateField(widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control'}))
+
     class Meta:
         model = Patient
         fields = ['name', 'surname', 'date_of_birth', 'phone_number']

@@ -17,6 +17,7 @@ class Doctor(models.Model):
     address = models.OneToOneField(Address, null=False, on_delete=models.CASCADE, default="")
     name = models.CharField(max_length=20, null=False, default="")
     surname = models.CharField(max_length=20, null=False, default="")
+    phone_number = models.CharField(default="", null=False, max_length=9)
     specialization = models.CharField(max_length=50, null=False, default="")
 
     def __str__(self):

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import CreateUserForm, LoginForm, PatientDataForm
+from .forms import CreateUserForm, LoginForm, PatientDataForm, AddressDataForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import auth, Group
 from django.contrib.auth import authenticate, login, logout
@@ -61,53 +61,17 @@ def patient_data(request):
         patient = Patient.objects.get(user=request.user)
     except Patient.DoesNotExist:
         patient = None
-    form = PatientDataForm()
+    patient_form = PatientDataForm()
+    address_form = AddressDataForm()
 
     if request.method == "POST":
-        form = PatientDataForm(request.POST, instance = patient)
+        form = PatientDataForm(request.POST, instance=patient)
 
         if form.is_valid():
-            '''
-            name = form.cleaned_data['name']
-            surname = form.cleaned_data['surname']
-            date_of_birth = form.cleaned_data['date_of_birth']
-            street = form.cleaned_data['street']
-            number = form.cleaned_data['number']
-            zip_code = form.cleaned_data['zip_code']
-            city = form.cleaned_data['city']
-            
-            if patient:
-                patient.user = request.user
-                patient.name = name
-                patient.surname = surname
-                patient.date_of_birth = date_of_birth
-                patient.address.street = street
-                patient.address.number = number
-                patient.address.zip_code = zip_code
-                patient.address.city = city
-                patient.save()
-                patient.address.save()
-            else:
-                address = Address.objects.create(
-                    street=street,
-                    zip_code=zip_code,
-                    number=number,
-                    city=city,
-                )
-                patient = Patient.objects.create(
-                    user=request.user,
-                    name=name,
-                    surname=surname,
-                    date_of_birth=date_of_birth,
-                    address=address,
-            )
-            '''
-            form.save()
+            patient_form.save()
+            address_form.save()
             return redirect('dashboard')
-        else:
-            print("Formularz niepoprawny")
-            print(form.errors)
 
-    context = {'patient_data': form}
+    context = {'patient_data': patient_form, 'address_data': address_form}
 
     return render(request, 'users/patient_data.html', context=context)

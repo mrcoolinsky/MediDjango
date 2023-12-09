@@ -1,6 +1,4 @@
-{% extends "main/dashboard.html" %}
-{% block title %}Pacjenci{% endblock %}
-{% block content_title %}Pacjenci{% endblock %}
+{% extends "main/patients.html" %}
 {% block content_main %}
     <div class="table-responsive">
         <table class="table table-striped">
@@ -29,8 +27,9 @@
         <div class="form-control">
                   {{ patient_form.as_p }}
                   {{ address_form.as_p }}
+            <div class="d-flex justify-content-center">
+                <button class="w-25 btn btn-lg btn-primary" type="submit">Zmień dane</button>
+            </div>
         </div>
-        <button class="w-100 btn btn-lg btn-color" type="submit">Zmień dane</button>
-        <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
       </form>
 {% endblock %}
