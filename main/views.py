@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Permission, User, Group
 from main.models import Patient, Address, Doctor
 from users.forms import PatientDataForm, AddressDataForm, DoctorDataForm
+from .templatetags import have_group
+from django.contrib.auth.decorators import user_passes_test
 
 
 @login_required(login_url="login")
@@ -21,14 +23,15 @@ def main(request):
 
 
 @login_required(login_url="login")
+@user_passes_test(have_group.is_receptionist)
 def patients(request):
     all_patients = Patient.objects.all()
-
     context = {'all_patients': all_patients, 'active_app': 'patients'}
     return render(request, 'main/patients.html', context=context)
 
 
 @login_required(login_url="login")
+@user_passes_test(have_group.is_receptionist)
 def edit_patient(request, patient_id):
     patient = Patient.objects.get(id=patient_id)
     address_id = patient.address.id
@@ -51,6 +54,7 @@ def edit_patient(request, patient_id):
 
 
 @login_required(login_url="login")
+@user_passes_test(have_group.is_receptionist)
 def doctors(request):
     all_doctors = Doctor.objects.all()
 
@@ -59,8 +63,8 @@ def doctors(request):
 
 
 @login_required(login_url="login")
+@user_passes_test(have_group.is_receptionist)
 def edit_doctor(request, doctor_id):
-
     doctor = Doctor.objects.get(id=doctor_id)
     address_id = doctor.address.id
     address = Address.objects.get(id=address_id)
