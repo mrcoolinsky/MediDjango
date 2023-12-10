@@ -21,13 +21,13 @@ class Doctor(models.Model):
     specialization = models.CharField(max_length=50, null=False, default="")
 
     def __str__(self):
-        return str(self.user)
+        return f"{self.name} {self.surname}"
 
 
 class Medicine(models.Model):
     title = models.CharField(null=False, default="", max_length=20)
+    dosage = models.CharField(null=False, default="", max_length=10)
     property = models.CharField(null=True, default="", max_length=50)
-    availability = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.title)
@@ -68,6 +68,8 @@ class Visit(models.Model):
     title = models.CharField(null=False, default="", max_length=20)
     patient = models.ForeignKey(Patient, null=False, on_delete=models.CASCADE)
     doctor = models.ForeignKey(Doctor, null=False, on_delete=models.CASCADE)
+    medicines = models.ForeignKey(Medicine, null=True, blank=True, on_delete=models.CASCADE)
+    diseases = models.ForeignKey(Disease, null=True, blank=True, on_delete=models.CASCADE)
     date = models.DateTimeField()
 
     def __str__(self):
