@@ -5,6 +5,7 @@ from main.models import Patient, Address, Doctor
 from users.forms import PatientDataForm, AddressDataForm, DoctorDataForm
 from .templatetags import have_group
 from django.contrib.auth.decorators import user_passes_test
+from django.db.models import Q
 
 
 @login_required(login_url="login")
@@ -25,7 +26,14 @@ def main(request):
 @login_required(login_url="login")
 @user_passes_test(have_group.is_receptionist)
 def patients(request):
-    all_patients = Patient.objects.all()
+
+    if 'q' in request.GET:
+        q = request.GET['q']
+        multiple_q = Q(Q(name__icontains=q) | Q(surname__icontains=q))
+        all_patients = Patient.objects.filter(multiple_q)
+    else:
+        all_patients = Patient.objects.all()
+
     context = {'all_patients': all_patients, 'active_app': 'patients'}
     return render(request, 'main/patients.html', context=context)
 

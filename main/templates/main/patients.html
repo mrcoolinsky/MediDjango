@@ -2,6 +2,13 @@
 {% block title %}Pacjenci{% endblock %}
 {% block content_title %}Pacjenci{% endblock %}
 {% block content_main %}
+<form>
+  <div class="form-group">
+    <label for="q">Imię i Nazwisko</label>
+    <input type="search" class="form-control" id="q" name="q" placeholder="Jan Kowalski">
+    <small class="form-text text-muted">Wprowadź imię i nazwisko aby wyszukać pacjenta</small>
+  </div>
+</form>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
