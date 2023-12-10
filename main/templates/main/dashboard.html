@@ -1,4 +1,5 @@
 {% load static %}
+{% load have_group %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -74,20 +75,20 @@
               Dashboard
             </a>
           </li>
-
+          {% if request.user|is_receptionist %}
           <li class="nav-item">
             <a class="nav-link {% if active_app == 'patients' %}active{% endif %}" href="{% url 'patients' %}">
               <span data-feather="file"></span>
               Pacjenci
             </a>
           </li>
-
           <li class="nav-item">
             <a class="nav-link {% if active_app == 'doctors' %}active{% endif %}" href="{% url 'doctors' %}">
               <span data-feather="shopping-cart"></span>
               Lekarze
             </a>
           </li>
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="#">
               <span data-feather="users"></span>
