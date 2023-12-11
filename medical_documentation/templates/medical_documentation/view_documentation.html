@@ -14,7 +14,7 @@
                   <th scope="col">Telefon</th>
                 </tr>
             </thead>
-            <tbody>
+            <!--<tbody>
                 <tr>
                     <td>{{ patient.name }}</td>
                     <td>{{ patient.surname }}</td>
@@ -22,14 +22,14 @@
                     <td>{{ patient.date_of_birth }}</td>
                     <td>{{ patient.phone_number }}</td>
                 </tr>
-                {% for data in documentation.visits %}
+                {% for data in patient.visit %}
                 <tr>
                     <td>{{ data.title }}</td>
                     <td>{{ data.doctor }}</td>
                 </tr>
                 {% endfor %}
                 <tr>
-                    <td>{{ documentation.title }}</td>
+                    <td>{{ patient.visit}}</td>
                     <td>{{ documentation.visits }}</td>
                     <td>{{ patient.address.street }} {{ patient.address.number }}, {{ patient.address.zip_code }} {{ patient.address.city }}</td>
                     <td>{{ patient.date_of_birth }}</td>

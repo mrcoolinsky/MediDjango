@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from main.models import Patient, Documentation
+from main.models import Patient, Visit
 from django.db.models import Q
 from django.contrib.auth.decorators import user_passes_test
 from main.templatetags import have_group
@@ -22,8 +22,11 @@ def documentation(request):
 @user_passes_test(have_group.is_receptionist)
 def view_documentation(request, patient_id):
     patient = Patient.objects.get(id=patient_id)
-    doc_data = Documentation.objects.get(id=patient.documentation.id)
-    print(doc_data, patient.name)
-    context = {'active_app': 'documentation', 'documentation': doc_data, 'patient': patient}
+    doc_data = Visit.objects.filter(patient=patient.id)
+    for data in doc_data:
+        print(data.title)
+        print(data.date)
+
+    context = {'active_app': 'documentation', 'documentation': doc_data,'patient': patient}
 
     return render(request, 'medical_documentation/view_documentation.html', context=context)
