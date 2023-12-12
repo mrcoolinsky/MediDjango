@@ -24,9 +24,9 @@ def view_documentation(request, patient_id):
     patient = Patient.objects.get(id=patient_id)
     doc_data = Visit.objects.filter(patient=patient.id)
     for data in doc_data:
-        print(data.title)
+        print(data)
         print(data.date)
 
-    context = {'active_app': 'documentation', 'documentation': doc_data,'patient': patient}
+    context = {'active_app': 'documentation', 'documentation': doc_data, 'patient': patient}
 
     return render(request, 'medical_documentation/view_documentation.html', context=context)

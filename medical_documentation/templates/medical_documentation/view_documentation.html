@@ -14,7 +14,7 @@
                   <th scope="col">Telefon</th>
                 </tr>
             </thead>
-            <!--<tbody>
+            <tbody>
                 <tr>
                     <td>{{ patient.name }}</td>
                     <td>{{ patient.surname }}</td>
@@ -22,20 +22,53 @@
                     <td>{{ patient.date_of_birth }}</td>
                     <td>{{ patient.phone_number }}</td>
                 </tr>
-                {% for data in patient.visit %}
-                <tr>
-                    <td>{{ data.title }}</td>
-                    <td>{{ data.doctor }}</td>
-                </tr>
-                {% endfor %}
-                <tr>
-                    <td>{{ patient.visit}}</td>
-                    <td>{{ documentation.visits }}</td>
-                    <td>{{ patient.address.street }} {{ patient.address.number }}, {{ patient.address.zip_code }} {{ patient.address.city }}</td>
-                    <td>{{ patient.date_of_birth }}</td>
-                    <td>{{ patient.phone_number }}</td>
-                </tr>
             </tbody>
         </table>
+    </div>
+    <style>
+    .custom-background{
+         background-color: #e0e0e0;
+
+    }
+    </style>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-sm text-center m-2 rounded custom-background p-2">
+                <h5>Wizyty</h5>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                          <th scope="col">Imię</th>
+                          <th scope="col">Nazwisko</th>
+                          <th scope="col">Adres</th>
+                          <th scope="col">Data Urodzenia</th>
+                          <th scope="col">Telefon</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ patient.name }}</td>
+                            <td>{{ patient.surname }}</td>
+                            <td>{{ patient.address.street }} {{ patient.address.number }}, {{ patient.address.zip_code }} {{ patient.address.city }}</td>
+                            <td>{{ patient.date_of_birth }}</td>
+                            <td>{{ patient.phone_number }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ patient.name }}</td>
+                            <td>{{ patient.surname }}</td>
+                            <td>{{ patient.address.street }} {{ patient.address.number }}, {{ patient.address.zip_code }} {{ patient.address.city }}</td>
+                            <td>{{ patient.date_of_birth }}</td>
+                            <td>{{ patient.phone_number }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm text-center m-2 rounded bg-light p-2">
+                <h5>Przyjmowane leki</h5>
+            </div>
+            <div class="col-sm text-center m-2 rounded bg-light p-2">
+                <h5>Przebyte choroby</h5>
+            </div>
+        </div>
     </div>
 {% endblock %}
