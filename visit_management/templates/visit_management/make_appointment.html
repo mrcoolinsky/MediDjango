@@ -1,0 +1,12 @@
+{% load static %}
+
+{% block content %}
+    <h2>Umów wizytę</h2>
+    <form method="POST" action="{% url 'make_appointment' %}">
+        {% csrf_token %}
+        {{ form.patient_name.label_tag }} {{ form.patient_name }}
+        {{ form.doctor_name.label_tag }} {{ form.doctor_name }}
+        {{ form.appointment_date.label_tag }} {{ form.appointment_date }}
+        <button type="submit">Zatwierdź wizytę</button>
+    </form>
+{% endblock %}

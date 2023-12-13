@@ -1,12 +1,18 @@
 from django.db import models
+from main.models import Patient
+from main.models import Doctor
 
-# Create your models here.
+# models.py
+from django.db import models
+
 class Visit(models.Model):
-    title = models.CharField(null=False, default="", max_length=20)
-    patient = models.ForeignKey("Patient", null=False, on_delete=models.CASCADE)
-    doctor = models.ForeignKey("Doctor", null=False, on_delete=models.CASCADE)
-    date = models.DateTimeField()
+    patient_name = models.CharField(max_length=255)
+    doctor_name = models.CharField(max_length=255)
+    appointment_date = models.DateTimeField()
 
     def __str__(self):
-        return str(self.title)
+        return f"{self.patient_name} - {self.doctor_name} - {self.appointment_date}"
+
+
+#
 

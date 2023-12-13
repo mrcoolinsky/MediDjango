@@ -37,3 +37,11 @@ class AdditionalDataForm(forms.Form):
     number = forms.CharField(max_length=5, widget=forms.TextInput(attrs={'class': 'form-control'}))
     zip_code = forms.CharField(max_length=6, widget=forms.TextInput(attrs={'class': 'form-control'}))
     city = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+class MakeAppointmentForm(forms.Form):
+    first_name = forms.CharField(label='Imię pacjenta', max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(label='Nazwisko pacjenta', max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    appointment_date = forms.DateTimeField(label='Data wizyty', widget=forms.TextInput(attrs={'type': 'datetime-local', 'class': 'form-control'}))
+    doctor_name = forms.CharField(label='Imię doktora', max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+
