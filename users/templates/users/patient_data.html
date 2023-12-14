@@ -31,6 +31,7 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
   </head>
   <body class="text-center">
 
@@ -41,8 +42,9 @@
     <h1 class="h3 mb-3 fw-normal">Uzupełnij dodatkowe dane</h1>
     <div class="form-control">
         {{ patient_data.as_p }}
+        {{ address_data.as_p }}
     </div>
-    <button class="w-100 btn btn-lg btn-primary btn-color" type="submit">Wprowadź dane</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Wprowadź dane</button>
     <p class="mt-5 mb-3 text-muted">&copy; 2023</p>
   </form>
 </main>

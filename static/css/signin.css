@@ -37,12 +37,3 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
-.btn-color{
-  background-color: #1D597D;
-  border-color: #1D597D;
-}
-
-.btn-color:hover {
-  background-color: #83B6B9;
-  border-color: #83B6B9;
-}
