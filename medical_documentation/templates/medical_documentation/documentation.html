@@ -1,7 +1,8 @@
 {% extends "main/dashboard.html" %}
-{% block title %}Pacjenci{% endblock %}
-{% block content_title %}Pacjenci{% endblock %}
+{% block title %}Dokumentacja{% endblock %}
+{% block content_title %}Dokumentacja Medyczna{% endblock %}
 {% block content_main %}
+
 <form>
   <div class="form-group">
     <label for="q">Imię i Nazwisko</label>
@@ -9,7 +10,8 @@
     <small class="form-text text-muted">Wprowadź imię i nazwisko aby wyszukać pacjenta</small>
   </div>
 </form>
-    <div class="table-responsive">
+
+<div class="table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -23,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-              {% for patient in all_patients %}
+              {% for patient in data %}
                 <tr>
                     <th scope="row">{{ forloop.counter }}</th>
                     <td>{{ patient.name }}</td>
@@ -31,7 +33,7 @@
                     <td>{{ patient.address.street }} {{ patient.address.number }}, {{ patient.address.zip_code }} {{ patient.address.city }}</td>
                     <td>{{ patient.date_of_birth }}</td>
                     <td>{{ patient.phone_number }}</td>
-                    <td><a href="{% url 'edit_patient' patient.id %}">Edytuj</a></td>
+                    <td><a href="{% url 'view_documentation' patient.id %}">Dokumentacja</a></td>
                 </tr>
               {% endfor %}
             </tbody>
@@ -39,4 +41,3 @@
       </div>
 
 {% endblock %}
-
