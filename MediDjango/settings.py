@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users',
     'bootstrap5',
     'visit_management',
+    'medical_documentation'
 ]
 
 MIDDLEWARE = [
