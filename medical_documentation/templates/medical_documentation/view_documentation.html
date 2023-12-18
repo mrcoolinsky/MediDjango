@@ -1,7 +1,10 @@
+
 {% extends "main/dashboard.html" %}
+{% load have_group %}
 {% block title %}Dokumentacja{% endblock %}
 {% block content_title %}Dokumentacja Medyczna{% endblock %}
 {% block content_main %}
+
 
     <div class="table-responsive">
         <table class="table table-striped">
@@ -38,16 +41,16 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                          <th scope="col">Imię</th>
-                          <th scope="col">Nazwisko</th>
-                          <th scope="col">Adres</th>
-                          <th scope="col">Data Urodzenia</th>
-                          <th scope="col">Telefon</th>
+                          <th scope="col">#</th>
+                          <th scope="col">Data</th>
+                          <th scope="col">Pacjent</th>
+                          <th scope="col">Lekarz</th>
+                          <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{{ patient.name }}</td>
+                            <td>{{ Visit.patient }}</td>
                             <td>{{ patient.surname }}</td>
                             <td>{{ patient.address.street }} {{ patient.address.number }}, {{ patient.address.zip_code }} {{ patient.address.city }}</td>
                             <td>{{ patient.date_of_birth }}</td>
@@ -65,6 +68,13 @@
             </div>
             <div class="col-sm text-center m-2 rounded bg-light p-2">
                 <h5>Przyjmowane leki</h5>
+                 {% for _ in record_count|default_if_none:1|get_range %}
+                     <tr>
+        <td>{{ patient.user }}</td>
+        <td>{{ patient.user }}</td>
+        <!-- ... -->
+      </tr>
+    {% endfor %}
             </div>
             <div class="col-sm text-center m-2 rounded bg-light p-2">
                 <h5>Przebyte choroby</h5>
