@@ -26,6 +26,7 @@ class Doctor(models.Model):
 
 class Medicine(models.Model):
     title = models.CharField(null=False, default="", max_length=20)
+    visit = models.ForeignKey("Visit", on_delete=models.CASCADE, null=False, default=1)
     dosage = models.CharField(null=False, default="", max_length=10)
     property = models.CharField(null=True, default="", max_length=50)
 
@@ -35,6 +36,7 @@ class Medicine(models.Model):
 
 class Disease(models.Model):
     title = models.CharField(null=False, default="", max_length=20)
+    visit = models.ForeignKey("Visit", on_delete=models.CASCADE, null=False, default=1)
     property = models.CharField(null=False, default="", max_length=50)
 
     def __str__(self):
@@ -57,8 +59,6 @@ class Visit(models.Model):
     title = models.CharField(null=False, default="", max_length=20)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=False)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=False)
-    medicines = models.ForeignKey(Medicine, null=True, blank=True, on_delete=models.CASCADE)
-    diseases = models.ForeignKey(Disease, null=True, blank=True, on_delete=models.CASCADE)
     date = models.DateTimeField()
 
     def __str__(self):

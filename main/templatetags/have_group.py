@@ -16,9 +16,3 @@ def is_doctor(user):
 @register.filter(name='is_patient')
 def is_doctor(user):
     return user.groups.filter(name='Pacjent').exists()
-
-
-@register.filter
-def get_range(value):
-    return range(value)
-

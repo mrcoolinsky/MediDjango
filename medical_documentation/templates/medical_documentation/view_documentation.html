@@ -43,38 +43,44 @@
                         <tr>
                           <th scope="col">#</th>
                           <th scope="col">Data</th>
-                          <th scope="col">Pacjent</th>
                           <th scope="col">Lekarz</th>
                           <th scope="col"></th>
                         </tr>
                     </thead>
+                    {% for data in documentation %}
                     <tbody>
                         <tr>
-                            <td>{{ Visit.patient }}</td>
-                            <td>{{ patient.surname }}</td>
-                            <td>{{ patient.address.street }} {{ patient.address.number }}, {{ patient.address.zip_code }} {{ patient.address.city }}</td>
-                            <td>{{ patient.date_of_birth }}</td>
-                            <td>{{ patient.phone_number }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ patient.name }}</td>
-                            <td>{{ patient.surname }}</td>
-                            <td>{{ patient.address.street }} {{ patient.address.number }}, {{ patient.address.zip_code }} {{ patient.address.city }}</td>
-                            <td>{{ patient.date_of_birth }}</td>
-                            <td>{{ patient.phone_number }}</td>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ data.date|date:"jS F Y" }}</td>
+                            <td>{{ data.doctor }}</td>
+                            <td><a href="{% url 'view_documentation' patient.id %}">Szczegóły</a></td>
                         </tr>
                     </tbody>
+                    {% endfor %}
                 </table>
             </div>
             <div class="col-sm text-center m-2 rounded bg-light p-2">
                 <h5>Przyjmowane leki</h5>
-                 {% for _ in record_count|default_if_none:1|get_range %}
-                     <tr>
-        <td>{{ patient.user }}</td>
-        <td>{{ patient.user }}</td>
-        <!-- ... -->
-      </tr>
-    {% endfor %}
+                     <table class="table table-striped">
+                    <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Data</th>
+                          <th scope="col">Lek</th>
+                          <th scope="col">Dawkowanie</th>
+                        </tr>
+                    </thead>
+                    {% for data in documentation %}
+                    <tbody>
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ data.Visit.title }}</td>
+                            <td></td>
+                            <td><a href="{% url 'view_documentation' patient.id %}">Szczegóły</a></td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
             </div>
             <div class="col-sm text-center m-2 rounded bg-light p-2">
                 <h5>Przebyte choroby</h5>
