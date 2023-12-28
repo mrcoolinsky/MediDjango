@@ -47,21 +47,21 @@
                           <th scope="col"></th>
                         </tr>
                     </thead>
-                    {% for data in documentation %}
                     <tbody>
+                    {% for data in documentation %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td>{{ data.date|date:"jS F Y" }}</td>
+                            <td>{{ data.date|date:"j.m.Y" }}</td>
                             <td>{{ data.doctor }}</td>
                             <td><a href="{% url 'view_documentation' patient.id %}">Szczegóły</a></td>
                         </tr>
-                    </tbody>
                     {% endfor %}
+                    </tbody>
                 </table>
             </div>
             <div class="col-sm text-center m-2 rounded bg-light p-2">
                 <h5>Przyjmowane leki</h5>
-                     <table class="table table-striped">
+                 <table class="table table-striped">
                     <thead>
                         <tr>
                           <th scope="col">#</th>
@@ -71,18 +71,18 @@
                           <th scope="col">Dawkowanie</th>
                         </tr>
                     </thead>
-                    {% for data in documentation %}
                     <tbody>
+                    {% for data in medicine %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td>{{ data.Visit.title }}</td>
-                            <td>{{ data.Visit.title }}</td>
-                            <td></td>
-                            <td><a href="{% url 'view_documentation' patient.id %}">Szczegóły</a></td>
+                            <td>{{ data.start_date|date:"j.m.Y"  }}</td>
+                            <td>{{ data.end_date|date:"j.m.Y"  }}</td>
+                            <td>{{ data.medicine }}</td>
+                            <td>{{ data.description }}</td>
                         </tr>
-                    </tbody>
                     {% endfor %}
-                </table>
+                    </tbody>
+                 </table>
             </div>
             <div class="col-sm text-center m-2 rounded bg-light p-2">
                 <h5>Przebyte choroby</h5>

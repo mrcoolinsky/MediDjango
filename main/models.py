@@ -45,7 +45,7 @@ class Dosage(models.Model):
 
 class Disease(models.Model):
     title = models.CharField(null=False, default="", max_length=20)
-    property = models.CharField(null=False, default="", max_length=50)
+    symptoms = models.CharField(null=True, blank=True, max_length=50)
 
     def __str__(self):
         return str(self.title)
