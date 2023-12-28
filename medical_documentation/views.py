@@ -23,10 +23,11 @@ def documentation(request):
 def view_documentation(request, patient_id):
     patient = Patient.objects.get(id=patient_id)
     doc_data = Visit.objects.filter(patient=patient.id)
-    #medicine = Medicine.objects.filter(visit=doc_data)
+    #medicine = Medicine.objects.filter(patient=patient.id)
 
     for data in doc_data:
         print(data)
+        #print(medicine)
         print(data.date)
         print(data.patient.name)
 

@@ -65,7 +65,8 @@
                     <thead>
                         <tr>
                           <th scope="col">#</th>
-                          <th scope="col">Data</th>
+                          <th scope="col">Data od</th>
+                          <th scope="col">Data do</th>
                           <th scope="col">Lek</th>
                           <th scope="col">Dawkowanie</th>
                         </tr>
@@ -74,6 +75,7 @@
                     <tbody>
                         <tr>
                             <td>{{ forloop.counter }}</td>
+                            <td>{{ data.Visit.title }}</td>
                             <td>{{ data.Visit.title }}</td>
                             <td></td>
                             <td><a href="{% url 'view_documentation' patient.id %}">Szczegóły</a></td>

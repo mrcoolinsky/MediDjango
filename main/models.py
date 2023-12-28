@@ -26,17 +26,25 @@ class Doctor(models.Model):
 
 class Medicine(models.Model):
     title = models.CharField(null=False, default="", max_length=20)
-    visit = models.ForeignKey("Visit", on_delete=models.CASCADE, null=False, default=1)
-    dosage = models.CharField(null=False, default="", max_length=10)
-    property = models.CharField(null=True, default="", max_length=50)
+    property = models.CharField(null=True, max_length=50)
 
     def __str__(self):
         return str(self.title)
 
 
+class Dosage(models.Model):
+    start_date = models.DateField(null=False, default='2000-01-01')
+    end_date = models.DateField(null=False, default='2000-01-01')
+    medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE)
+    patient = models.ForeignKey("Patient", on_delete=models.CASCADE)
+    description = models.CharField(null=False, default="", max_length=25)
+
+    def __str__(self):
+        return f"{self.medicine}, {self.patient.name} {self.patient.surname}"
+
+
 class Disease(models.Model):
     title = models.CharField(null=False, default="", max_length=20)
-    visit = models.ForeignKey("Visit", on_delete=models.CASCADE, null=False, default=1)
     property = models.CharField(null=False, default="", max_length=50)
 
     def __str__(self):
@@ -59,6 +67,9 @@ class Visit(models.Model):
     title = models.CharField(null=False, default="", max_length=20)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=False)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=False)
+    disease = models.ForeignKey(Disease, on_delete=models.CASCADE, null=True)
+    medicine_dosage = models.ForeignKey(Dosage, on_delete=models.CASCADE, null=True)
+    notes = models.CharField(null=True, max_length=50)
     date = models.DateTimeField()
 
     def __str__(self):
