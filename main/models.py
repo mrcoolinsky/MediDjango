@@ -68,8 +68,8 @@ class Visit(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=False)
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=False)
     disease = models.ForeignKey(Disease, on_delete=models.CASCADE, null=True)
-    medicine_dosage = models.ForeignKey(Dosage, on_delete=models.CASCADE, null=True)
-    notes = models.CharField(null=True, max_length=50)
+    medicine_dosage = models.OneToOneField(Dosage, on_delete=models.CASCADE, null=True)
+    notes = models.CharField(null=True, blank=True, max_length=50)
     date = models.DateTimeField()
 
     def __str__(self):

@@ -14,5 +14,5 @@ def is_doctor(user):
 
 
 @register.filter(name='is_patient')
-def is_doctor(user):
+def is_patient(user):
     return user.groups.filter(name='Pacjent').exists()

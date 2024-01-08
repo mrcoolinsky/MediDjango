@@ -28,15 +28,9 @@
             </tbody>
         </table>
     </div>
-    <style>
-    .custom-background{
-         background-color: #e0e0e0;
-
-    }
-    </style>
     <div class="container mt-3">
         <div class="row">
-            <div class="col-sm text-center m-2 rounded custom-background p-2">
+            <div class="col-sm text-center m-2 bg-light rounded p-2">
                 <h5>Wizyty</h5>
                 <table class="table table-striped">
                     <thead>
@@ -86,6 +80,24 @@
             </div>
             <div class="col-sm text-center m-2 rounded bg-light p-2">
                 <h5>Przebyte choroby</h5>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Choroba</th>
+                          <th scope="col">Symptomy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for data in documentation %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ data.disease.title  }}</td>
+                            <td>{{ data.disease.symptoms  }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                 </table>
             </div>
         </div>
     </div>
