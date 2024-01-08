@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from main.models import Patient, Visit, Dosage
 from django.db.models import Q
-from django.contrib.auth.decorators import user_passes_test
 from main.templatetags import have_group
 
 
