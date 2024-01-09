@@ -35,8 +35,8 @@ class Medicine(models.Model):
 class Dosage(models.Model):
     start_date = models.DateField(null=False, default='2000-01-01')
     end_date = models.DateField(null=False, default='2000-01-01')
-    medicine = models.ForeignKey(Medicine, on_delete=models.CASCADE)
-    patient = models.ForeignKey("Patient", on_delete=models.CASCADE)
+    medicine = models.ForeignKey(Medicine, on_delete=models.SET_NULL, null=True)
+    patient = models.ForeignKey("Patient", on_delete=models.SET_NULL, null=True)
     description = models.CharField(null=False, default="", max_length=25)
 
     def __str__(self):
@@ -65,10 +65,10 @@ class Patient(models.Model):
 
 class Visit(models.Model):
     title = models.CharField(null=False, default="", max_length=20)
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=False)
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=False)
-    disease = models.ForeignKey(Disease, on_delete=models.CASCADE, null=True)
-    medicine_dosage = models.OneToOneField(Dosage, on_delete=models.CASCADE, null=True)
+    patient = models.ForeignKey(Patient, on_delete=models.SET_NULL, null=True)
+    doctor = models.ForeignKey(Doctor,on_delete=models.SET_NULL, null=True)
+    disease = models.ForeignKey(Disease,on_delete=models.SET_NULL, null=True)
+    medicine_dosage = models.OneToOneField(Dosage, on_delete=models.CASCADE, null=True,blank=True)
     notes = models.CharField(null=True, blank=True, max_length=300)
     date = models.DateField()
 

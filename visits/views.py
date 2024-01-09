@@ -52,3 +52,10 @@ def view_visit(request, visit_id):
     visit = Visit.objects.get(id=visit_id)
     context = {'active_app': 'visits', 'visit': visit}
     return render(request, 'visits/visit.html', context=context)
+
+
+@login_required(login_url="login")
+def delete_visit(request, visit_id):
+    visit = Visit.objects.get(id=visit_id)
+    visit.delete()
+    return redirect('visits')
