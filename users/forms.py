@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 from django import forms
 from django.forms.widgets import PasswordInput, TextInput
-from main.models import Patient, Address, Doctor, Visit
+from main.models import Patient, Address, Doctor, Visit, Disease, Dosage
 
 
 # create/register user
@@ -70,7 +70,29 @@ class VisitDataForm(forms.ModelForm):
 
     class Meta:
         model = Visit
-        fields = ['title', 'doctor', 'date', 'disease', 'medicine_dosage', 'notes']
+        fields = ['title', 'doctor', 'date', 'notes']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
+
+
+class DiseaseDataForm(forms.ModelForm):
+    class Meta:
+        model = Disease
+        fields = ['title', 'symptoms']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
+
+
+class DosageDataForm(forms.ModelForm):
+    class Meta:
+        model = Dosage
+        fields = ['start_date', 'end_date', 'medicine', 'description']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
