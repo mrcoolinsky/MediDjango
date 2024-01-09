@@ -1,8 +1,10 @@
 {% extends "main/dashboard.html" %}
+{% load have_group %}
 {% block title %}Dokumentacja{% endblock %}
 {% block content_title %}Wizyty{% endblock %}
 {% block content_main %}
 
+{% if request.user|is_receptionist or is_doctor%}
 <form>
   <div class="form-group">
     <label for="q">Imię i Nazwisko</label>
@@ -10,7 +12,7 @@
     <small class="form-text text-muted">Wprowadź imię i nazwisko aby wyszukać wizytę</small>
   </div>
 </form>
-
+{% endif %}
 <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -22,7 +24,6 @@
                   <th scope="col">Lekarz</th>
                   <th scope="col">Choroba</th>
                   <th scope="col">Więcej</th>
-                  <th scope="col">Opcje</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,7 +36,6 @@
                     <td>{{ visit.doctor }}</td>
                     <td>{{ visit.disease.title }}</td>
                     <td><a href="{% url 'view_visit' visit.id %}">Szczegóły</a></td>
-                    <td><a href="{% url 'visit_edit' visit.id %}">Edytuj</a></td>
                 </tr>
               {% endfor %}
             </tbody>

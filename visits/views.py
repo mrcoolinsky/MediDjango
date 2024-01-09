@@ -18,7 +18,11 @@ def visits(request):
         context = {'active_app': 'visits', 'data': data}
         return render(request, 'visits/visits.html', context=context)
     else:
-        return redirect('view_visit', request.user.id)
+        current_user_id = request.user.id
+        patient = Patient.objects.get(user=current_user_id)
+        data = Visit.objects.filter(patient=patient.id)
+        context = {'active_app': 'visits', 'data': data}
+        return render(request, 'visits/visits.html', context=context)
 
 
 @login_required(login_url="login")
@@ -49,6 +53,7 @@ def visit_edit(request, visit_id):
 
 @login_required(login_url="login")
 def view_visit(request, visit_id):
+
     visit = Visit.objects.get(id=visit_id)
     context = {'active_app': 'visits', 'visit': visit}
     return render(request, 'visits/visit.html', context=context)

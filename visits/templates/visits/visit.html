@@ -1,4 +1,5 @@
 {% extends "main/dashboard.html" %}
+{% load have_group %}
 {% block title %}Dokumentacja{% endblock %}
 {% block content_title %}Wizyty{% endblock %}
 {% block content_main %}
@@ -60,11 +61,12 @@
 <h3 class="mt-4 text-center">Miejsce na notatki:</h3>
 <p class="text-center fs-5 mt-3">{{ visit.notes }}</p>
 </div>
+ {% if request.user|is_receptionist or is_doctor%}
 <div class="d-flex justify-content-end">
     <a class="btn btn-primary me-1" href="{% url 'visit_edit' visit.id %}" role="button">Edytuj</a>
     <a class="btn btn-danger me-1" href="{% url 'visit_delete' visit.id %}" role="button">Usuń</a>
 </div>
-
+{% endif %}
 
 
 
