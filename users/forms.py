@@ -90,6 +90,8 @@ class DiseaseDataForm(forms.ModelForm):
 
 
 class DosageDataForm(forms.ModelForm):
+    start_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control'}))
+    end_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control'}))
     class Meta:
         model = Dosage
         fields = ['start_date', 'end_date', 'medicine', 'description']

@@ -45,3 +45,10 @@ def visit_edit(request, visit_id):
     context = {'active_app': 'visits', 'visit': visit, 'visit_form': visit_form, 'disease_form': disease_form,
                'dosage_form': dosage_form}
     return render(request, 'visits/visit_edit.html', context=context)
+
+
+@login_required(login_url="login")
+def view_visit(request, visit_id):
+    visit = Visit.objects.get(id=visit_id)
+    context = {'active_app': 'visits', 'visit': visit}
+    return render(request, 'visits/visit.html', context=context)

@@ -18,10 +18,10 @@
                   <th scope="col"></th>
                   <th scope="col">Imię</th>
                   <th scope="col">Nazwisko</th>
-                  <th scope="col">Wizyta</th>
-                  <th scope="col">Data</th>
+                  <th scope="col">Data Wizyty</th>
                   <th scope="col">Lekarz</th>
                   <th scope="col">Choroba</th>
+                  <th scope="col">Więcej</th>
                   <th scope="col">Opcje</th>
                 </tr>
             </thead>
@@ -31,10 +31,10 @@
                     <th scope="row">{{ forloop.counter }}</th>
                     <td>{{ visit.patient.name }}</td>
                     <td>{{ visit.patient.surname }}</td>
-                    <td>{{ visit.title }}</td>
                     <td>{{ visit.date|date:"j.m.Y" }}</td>
                     <td>{{ visit.doctor }}</td>
                     <td>{{ visit.disease.title }}</td>
+                    <td><a href="{% url 'view_visit' visit.id %}">Szczegóły</a></td>
                     <td><a href="{% url 'visit_edit' visit.id %}">Edytuj</a></td>
                 </tr>
               {% endfor %}
