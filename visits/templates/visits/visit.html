@@ -1,0 +1,74 @@
+{% extends "main/dashboard.html" %}
+{% load have_group %}
+{% block title %}Dokumentacja{% endblock %}
+{% block content_title %}Wizyty{% endblock %}
+{% block content_main %}
+
+
+<div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th scope="col">Imię</th>
+                  <th scope="col">Nazwisko</th>
+                  <th scope="col">Data</th>
+                  <th scope="col">Lekarz</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ visit.patient.name }}</td>
+                    <td>{{ visit.patient.surname }}</td>
+                    <td>{{ visit.date|date:"j.m.Y" }}</td>
+                    <td>{{ visit.doctor }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th scope="col">Choroba</th>
+                  <th scope="col">Symptomy</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ visit.disease.title }}</td>
+                    <td>{{ visit.disease.symptoms }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th scope="col">Lek</th>
+                  <th scope="col">Dawkowanie</th>
+                  <th scope="col">Od kiedy</th>
+                  <th scope="col">Do kiedy</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ visit.medicine_dosage.medicine }}</td>
+                    <td>{{ visit.medicine_dosage.description }}</td>
+                    <td>{{ visit.medicine_dosage.start_date|date:"j.m.Y" }}</td>
+                    <td>{{ visit.medicine_dosage.end_date|date:"j.m.Y" }}</td>
+                </tr>
+            </tbody>
+        </table>
+</div>
+<div>
+<h3 class="mt-4 text-center">Miejsce na notatki:</h3>
+<p class="text-center fs-5 mt-3">{{ visit.notes }}</p>
+</div>
+ {% if request.user|is_receptionist or is_doctor%}
+<div class="d-flex justify-content-end">
+    <a class="btn btn-primary me-1" href="{% url 'visit_edit' visit.id %}" role="button">Edytuj</a>
+    <a class="btn btn-danger me-1" href="{% url 'visit_delete' visit.id %}" role="button">Usuń</a>
+</div>
+{% endif %}
+
+
+
+
+{% endblock %}

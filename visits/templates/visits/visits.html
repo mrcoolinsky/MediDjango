@@ -1,0 +1,47 @@
+{% extends "main/dashboard.html" %}
+{% load have_group %}
+{% block title %}Dokumentacja{% endblock %}
+{% block content_title %}Wizyty{% endblock %}
+{% block content_main %}
+
+{% if request.user|is_receptionist or is_doctor%}
+<form>
+  <div class="form-group">
+    <label for="q">Imię i Nazwisko</label>
+    <input type="search" class="form-control" id="q" name="q" placeholder="Jan Kowalski">
+    <small class="form-text text-muted">Wprowadź imię i nazwisko aby wyszukać wizytę</small>
+  </div>
+</form>
+{% endif %}
+<div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Imię</th>
+                  <th scope="col">Nazwisko</th>
+                  <th scope="col">Data Wizyty</th>
+                  <th scope="col">Lekarz</th>
+                  <th scope="col">Choroba</th>
+                  <th scope="col">Więcej</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for visit in data %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ visit.patient.name }}</td>
+                    <td>{{ visit.patient.surname }}</td>
+                    <td>{{ visit.date|date:"j.m.Y" }}</td>
+                    <td>{{ visit.doctor }}</td>
+                    <td>{{ visit.disease.title }}</td>
+                    <td><a href="{% url 'view_visit' visit.id %}">Szczegóły</a></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+      </div>
+
+
+
+{% endblock %}

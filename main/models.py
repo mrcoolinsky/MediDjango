@@ -26,16 +26,26 @@ class Doctor(models.Model):
 
 class Medicine(models.Model):
     title = models.CharField(null=False, default="", max_length=20)
-    dosage = models.CharField(null=False, default="", max_length=10)
-    property = models.CharField(null=True, default="", max_length=50)
+    property = models.CharField(null=True, max_length=50)
 
     def __str__(self):
         return str(self.title)
 
 
+class Dosage(models.Model):
+    start_date = models.DateField(null=False, default='2000-01-01')
+    end_date = models.DateField(null=False, default='2000-01-01')
+    medicine = models.ForeignKey(Medicine, on_delete=models.SET_NULL, null=True)
+    patient = models.ForeignKey("Patient", on_delete=models.SET_NULL, null=True)
+    description = models.CharField(null=False, default="", max_length=25)
+
+    def __str__(self):
+        return f"{self.medicine}, {self.patient.name} {self.patient.surname}"
+
+
 class Disease(models.Model):
     title = models.CharField(null=False, default="", max_length=20)
-    property = models.CharField(null=False, default="", max_length=50)
+    symptoms = models.CharField(null=True, blank=True, max_length=50)
 
     def __str__(self):
         return str(self.title)
@@ -55,11 +65,12 @@ class Patient(models.Model):
 
 class Visit(models.Model):
     title = models.CharField(null=False, default="", max_length=20)
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=False)
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=False)
-    medicines = models.ForeignKey(Medicine, null=True, blank=True, on_delete=models.CASCADE)
-    diseases = models.ForeignKey(Disease, null=True, blank=True, on_delete=models.CASCADE)
-    date = models.DateTimeField()
+    patient = models.ForeignKey(Patient, on_delete=models.SET_NULL, null=True)
+    doctor = models.ForeignKey(Doctor,on_delete=models.SET_NULL, null=True)
+    disease = models.ForeignKey(Disease,on_delete=models.SET_NULL, null=True)
+    medicine_dosage = models.OneToOneField(Dosage, on_delete=models.CASCADE, null=True,blank=True)
+    notes = models.CharField(null=True, blank=True, max_length=300)
+    date = models.DateField()
 
     def __str__(self):
         return str(self.title)

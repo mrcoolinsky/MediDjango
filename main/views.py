@@ -92,3 +92,12 @@ def edit_doctor(request, doctor_id):
 
     context = {'doctor_id': doctor_id, 'doctor': doctor, 'doctor_form': doctor_form, 'address_form': address_form}
     return render(request, 'main/edit_doctor.html', context=context)
+
+
+from django.shortcuts import render
+from .models import Patient  # Zastąp 'YourModel' nazwą swojego modelu
+
+def your_view(request):
+    record_count = Patient.objects.all().count()
+    return render(request, 'your_template.html', {'record_count': record_count})
+

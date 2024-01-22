@@ -1,0 +1,45 @@
+{% extends "main/dashboard.html" %}
+{% block title %}Dokumentacja{% endblock %}
+{% block content_title %}Wizyty{% endblock %}
+{% block content_main %}
+
+
+<div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th scope="col">Imię</th>
+                  <th scope="col">Nazwisko</th>
+                  <th scope="col">Wizyta</th>
+                  <th scope="col">Data</th>
+                  <th scope="col">Lekarz</th>
+                  <th scope="col">Choroba</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ visit.patient.name }}</td>
+                    <td>{{ visit.patient.surname }}</td>
+                    <td>{{ visit.title }}</td>
+                    <td>{{ visit.date|date:"j.m.Y" }}</td>
+                    <td>{{ visit.doctor }}</td>
+                    <td>{{ visit.disease }}</td>
+                </tr>
+            </tbody>
+        </table>
+</div>
+<form method="POST" name=" PatientDataForm">
+            {% csrf_token %}
+            <div class="form-control">
+                      {{ visit_form.as_p }}
+                      {{ disease_form.as_p }}
+                      {{ dosage_form.as_p }}
+                <div class="d-flex justify-content-center">
+                    <button class="w-25 btn btn-lg btn-primary" type="submit">Zmień dane</button>
+                </div>
+            </div>
+</form>
+
+
+
+{% endblock %}

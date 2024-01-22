@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 from django import forms
 from django.forms.widgets import PasswordInput, TextInput
-from main.models import Patient, Address, Doctor
+from main.models import Patient, Address, Doctor, Visit, Disease, Dosage
 
 
 # create/register user
@@ -63,13 +63,40 @@ class AddressDataForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
-        '''
-    name = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    surname = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    date_of_birth = forms.DateField(widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control'}))
-    phone_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    street = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    number = forms.CharField(max_length=5, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    zip_code = forms.CharField(max_length=6, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    city = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
-        '''
+
+
+class VisitDataForm(forms.ModelForm):
+    date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control'}))
+
+    class Meta:
+        model = Visit
+        fields = ['title', 'doctor', 'date', 'notes']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
+
+
+class DiseaseDataForm(forms.ModelForm):
+    class Meta:
+        model = Disease
+        fields = ['title', 'symptoms']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'
+
+
+class DosageDataForm(forms.ModelForm):
+    start_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control'}))
+    end_date = forms.DateField(widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control'}))
+    class Meta:
+        model = Dosage
+        fields = ['start_date', 'end_date', 'medicine', 'description']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'

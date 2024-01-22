@@ -1,7 +1,10 @@
+
 {% extends "main/dashboard.html" %}
+{% load have_group %}
 {% block title %}Dokumentacja{% endblock %}
 {% block content_title %}Dokumentacja Medyczna{% endblock %}
 {% block content_main %}
+
 
     <div class="table-responsive">
         <table class="table table-striped">
@@ -25,49 +28,76 @@
             </tbody>
         </table>
     </div>
-    <style>
-    .custom-background{
-         background-color: #e0e0e0;
-
-    }
-    </style>
     <div class="container mt-3">
         <div class="row">
-            <div class="col-sm text-center m-2 rounded custom-background p-2">
+            <div class="col-sm text-center m-2 bg-light rounded p-2">
                 <h5>Wizyty</h5>
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                          <th scope="col">Imię</th>
-                          <th scope="col">Nazwisko</th>
-                          <th scope="col">Adres</th>
-                          <th scope="col">Data Urodzenia</th>
-                          <th scope="col">Telefon</th>
+                          <th scope="col">#</th>
+                          <th scope="col">Data</th>
+                          <th scope="col">Lekarz</th>
+                          <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
+                    {% for data in documentation %}
                         <tr>
-                            <td>{{ patient.name }}</td>
-                            <td>{{ patient.surname }}</td>
-                            <td>{{ patient.address.street }} {{ patient.address.number }}, {{ patient.address.zip_code }} {{ patient.address.city }}</td>
-                            <td>{{ patient.date_of_birth }}</td>
-                            <td>{{ patient.phone_number }}</td>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ data.date|date:"j.m.Y" }}</td>
+                            <td>{{ data.doctor }}</td>
+                            <td><a href="{% url 'view_documentation' patient.id %}">Szczegóły</a></td>
                         </tr>
-                        <tr>
-                            <td>{{ patient.name }}</td>
-                            <td>{{ patient.surname }}</td>
-                            <td>{{ patient.address.street }} {{ patient.address.number }}, {{ patient.address.zip_code }} {{ patient.address.city }}</td>
-                            <td>{{ patient.date_of_birth }}</td>
-                            <td>{{ patient.phone_number }}</td>
-                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
             <div class="col-sm text-center m-2 rounded bg-light p-2">
                 <h5>Przyjmowane leki</h5>
+                 <table class="table table-striped">
+                    <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Data od</th>
+                          <th scope="col">Data do</th>
+                          <th scope="col">Lek</th>
+                          <th scope="col">Dawkowanie</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for data in medicine %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ data.start_date|date:"j.m.Y"  }}</td>
+                            <td>{{ data.end_date|date:"j.m.Y"  }}</td>
+                            <td>{{ data.medicine }}</td>
+                            <td>{{ data.description }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                 </table>
             </div>
             <div class="col-sm text-center m-2 rounded bg-light p-2">
                 <h5>Przebyte choroby</h5>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Choroba</th>
+                          <th scope="col">Symptomy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for data in documentation %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ data.disease.title  }}</td>
+                            <td>{{ data.disease.symptoms  }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                 </table>
             </div>
         </div>
     </div>
