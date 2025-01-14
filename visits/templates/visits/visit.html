@@ -63,6 +63,7 @@
 </div>
  {% if request.user|is_receptionist or is_doctor%}
 <div class="d-flex justify-content-end">
+    <a class="btn btn-success me-1" href="{% url 'generate-prescription' visit.id %}" role="button">Generuj Receptę</a>
     <a class="btn btn-primary me-1" href="{% url 'visit_edit' visit.id %}" role="button">Edytuj</a>
     <a class="btn btn-danger me-1" href="{% url 'visit_delete' visit.id %}" role="button">Usuń</a>
 </div>

@@ -9,5 +9,6 @@ urlpatterns = [
     path('visit/edit/change', views.visits, name="visit_change"),
     path('visit/edit/delete/<int:visit_id>/', views.delete_visit, name="visit_delete"),
     path('visit/view/<int:visit_id>/', views.view_visit, name="view_visit"),
+    path('generate-prescription/<int:visit_id>/', views.generate_prescription_pdf, name="generate-prescription"),
 
 ]

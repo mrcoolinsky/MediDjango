@@ -95,7 +95,7 @@ def edit_doctor(request, doctor_id):
 
 
 from django.shortcuts import render
-from .models import Patient  # Zastąp 'YourModel' nazwą swojego modelu
+from .models import Patient
 
 def your_view(request):
     record_count = Patient.objects.all().count()

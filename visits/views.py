@@ -1,10 +1,19 @@
+import os
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+
+from django.conf import settings
 from main.models import Patient, Visit, Dosage, Disease
 from django.db.models import Q
 from main.templatetags import have_group
 from users.forms import VisitDataForm, DiseaseDataForm, DosageDataForm
 
+from reportlab.pdfgen import canvas
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib.pagesizes import A4
+from reportlab.lib import colors
+from django.http import HttpResponse
 
 @login_required(login_url="login")
 def visits(request):
@@ -64,3 +73,59 @@ def delete_visit(request, visit_id):
     visit = Visit.objects.get(id=visit_id)
     visit.delete()
     return redirect('visits')
+
+@login_required(login_url="login")
+def generate_prescription_pdf(request, visit_id):
+    # Tworzenie odpowiedzi HTTP z nagłówkiem PDF
+
+    visit = Visit.objects.get(id=visit_id)
+
+    font_path = os.path.join(settings.BASE_DIR, 'static', 'fonts' , 'static','OpenSans-Medium.ttf')
+    logo_path = os.path.join(settings.BASE_DIR, 'static', 'assets', 'brand', 'logo.png')
+    if not os.path.exists(font_path):
+        raise FileNotFoundError(f"Font not found at {font_path}")
+    pdfmetrics.registerFont(TTFont('OpenSansMedium', font_path))
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="recepta.pdf"'
+
+    # Rozmiar strony
+    width, height = A4
+
+    # Tworzenie obiektu canvas
+    c = canvas.Canvas(response, pagesize=A4)
+    c.setFont("OpenSansMedium", 12)
+    # Dodanie logo w lewym górnym rogu (zmień ścieżkę do pliku logo)
+    try:
+        c.drawImage(logo_path, 220, height - 800, width=414, height=261, mask='auto')
+    except Exception as e:
+        print(f"Error loading logo: {e}")
+
+    # Dodanie nagłówka
+    c.setFont("OpenSansMedium", 20)
+    c.drawString(260, height - 50, "RECEPTA")
+
+    # Dodanie ramki wokół treści recepty
+    c.setLineWidth(1)
+    c.setStrokeColor(colors.black)
+    c.rect(40, height - 300, width - 80, 200, stroke=1, fill=0)
+    c.setFont("OpenSansMedium", 12)
+    # Treść recepty
+    c.drawString(50, height - 120, f"Imię i nazwisko pacjenta:{visit.patient.name} {visit.patient.surname}")
+    c.drawString(50, height - 140, "PESEL: 12345678901")
+    c.drawString(50, height - 160, "Adres: ul. Przykładowa 12, 00-000 Warszawa")
+
+    c.drawString(50, height - 200, f"Nazwa leku: {visit.medicine_dosage.medicine}")
+    c.drawString(50, height - 220, f"Dawkowanie: {visit.medicine_dosage.description}")
+    c.drawString(50, height - 240, "Ilość: 20 tabletek")
+
+    # Informacje o lekarzu
+    c.drawString(50, height - 280, f"Wystawił: {visit.doctor.name} {visit.doctor.surname}")
+
+    # Stopka dokumentu
+    c.drawString(40, 30, "Wygenerowano automatycznie przez system")
+
+    # Zakończenie dokumentu
+    c.showPage()
+    c.save()
+
+    return response
