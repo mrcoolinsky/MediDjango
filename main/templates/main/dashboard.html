@@ -148,9 +148,28 @@
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between align-items-end pt-3 mb-4 border-bottom">
         <h1>{% block content_title %}Dashboard{% endblock %}</h1>
-        <div>
-          <h6 class="text-end ">Dziś jest Wtorek 09 Stycznia</h6>
-        </div>
+        <h6 id="clock" class="text-end">
+
+              <script>
+                function updateClock() {
+                const days = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"];
+                const months = ["Stycznia", "Lutego", "Marca", "Kwietnia", "Maja", "Czerwca", "Lipca", "Sierpnia", "Września", "Października", "Listopada", "Grudnia"];
+
+                const now = new Date();
+                const dayName = days[now.getDay()];
+                const day = String(now.getDate()).padStart(2, '0');
+                const month = months[now.getMonth()];
+
+                const clockText = `Dziś jest ${dayName} ${day} ${month}`;
+                document.getElementById('clock').textContent = clockText;
+                }
+
+                updateClock(); // Initial call
+                setInterval(updateClock, 60000); // Update every minute
+              </script>
+
+        </h6>
+
       </div>
       <div>
           {% block content_main %}{% endblock %}
