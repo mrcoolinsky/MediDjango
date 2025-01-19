@@ -3,10 +3,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from django.conf import settings
-from main.models import Patient, Visit, Dosage, Disease
+from main.models import Patient, Visit, Dosage, Disease, Medicine
 from django.db.models import Q
 from main.templatetags import have_group
-from users.forms import DiseaseDataForm, DosageDataForm
+from users.forms import DiseaseDataForm, DosageDataForm, MedicineDataForm
 from .forms import VisitAddForm
 
 from datetime import datetime
@@ -46,25 +46,32 @@ def visit_add(request):
     form=VisitAddForm()
     dosage_form = DosageDataForm()
     disease_form = DiseaseDataForm()
-
+    medicine_form = MedicineDataForm()
     if request.method == 'POST':
         form = VisitAddForm(request.POST)
         dosage_form = DosageDataForm(request.POST)
         disease_form = DiseaseDataForm(request.POST)
-        if form.is_valid() and dosage_form.is_valid() and disease_form.is_valid():
+        medicine_form = MedicineDataForm(request.POST)
+        if form.is_valid() and dosage_form.is_valid() and disease_form.is_valid() and medicine_form.is_valid():
             title = form.cleaned_data['title']
             patient = form.cleaned_data['patient']
             doctor = form.cleaned_data['doctor']
             disease_title = disease_form.cleaned_data['title']
             disease_symptoms = disease_form.cleaned_data['symptoms']
-            medicine_dosage = dosage_form.cleaned_data['medicine']
             medicine_description = dosage_form.cleaned_data['description']
             medicine_start_date = dosage_form.cleaned_data['start_date']
             medicine_end_date = dosage_form.cleaned_data['end_date']
             notes = form.cleaned_data['notes']
             date = form.cleaned_data['date']
+            medicine_title = medicine_form.cleaned_data['title']
+            medicine_property = medicine_form.cleaned_data['property']
 
-            dosage = Dosage.objects.create(medicine=medicine_dosage,
+            medicine = Medicine.objects.create(title = medicine_title,
+                                               property = medicine_property
+            )
+
+            dosage = Dosage.objects.create(
+                                          medicine=medicine,
                                           description=medicine_description,
                                           start_date=medicine_start_date,
                                           end_date=medicine_end_date,
@@ -83,9 +90,11 @@ def visit_add(request):
                                          date = date,
                                          medicine_dosage = dosage
             )
+
         return redirect('visits')
 
-    return render(request, 'visits/visit_add.html', {'form': form, 'dosage_form': dosage_form, 'disease_form': disease_form})
+    context = {'form': form, 'dosage_form': dosage_form, 'disease_form': disease_form, 'medicine_form': medicine_form,  'active_app': 'visits'}
+    return render(request, 'visits/visit_add.html', context=context)
 
 @login_required(login_url="login")
 def visit_edit(request, visit_id):
